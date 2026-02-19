@@ -1,0 +1,20 @@
+# Sensitive
+backend/config/database.php
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Logs
+*.log
+error_log
+
+# Temp
+tmp/
