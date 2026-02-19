@@ -1,5 +1,7 @@
 <?php
-// backend/api/expenses.php
+require_once '../config/database.php';
+
+$conn = getDBConnection();
 
 require_once '../includes/cors.php';
 require_once '../includes/session.php';
