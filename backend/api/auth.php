@@ -1,5 +1,10 @@
 <?php
-// backend/api/auth.php
+require_once '../config/database.php';
+
+$conn = getDBConnection();
+
+// now you can use $conn
+
 
 require_once '../includes/cors.php';
 require_once '../includes/session.php';
