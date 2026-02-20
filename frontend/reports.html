@@ -16,15 +16,15 @@
   <div class="stats">
     <div class="card">
       <p>Total Expenses</p>
-      <h3 id="totalExpenses">$0.00</h3>
+      <h3 id="totalExpenses">$581.98</h3>
     </div>
     <div class="card">
       <p>Average per Transaction</p>
-      <h3 id="avgTransaction">$0.00</h3>
+      <h3 id="avgTransaction">$72.75</h3>
     </div>
     <div class="card">
       <p>Total Categories</p>
-      <h3 id="totalCategories">0</h3>
+      <h3 id="totalCategories">5</h3>
     </div>
   </div>
 
@@ -36,21 +36,26 @@
 
   <!-- Bottom Section -->
   <div class="bottom-section">
-    <div class="chart-card">
-      <h3>Expenses by Category</h3>
-      <canvas id="pieChart"></canvas>
+
+    <!-- Donut Chart -->
+    <div class="chart-card donut-card">
+      <div class="donut-title">Main title</div>
+      <div class="donut-subtitle">Secondary title</div>
+      <canvas id="donutChart"></canvas>
     </div>
 
+    <!-- Monthly Breakdown -->
     <div class="chart-card">
       <h3>Monthly Breakdown</h3>
       <div class="monthly">
-        <span id="monthName"></span>
-        <span id="monthTotal">$0.00</span>
+        <span id="monthName">Feb 2026</span>
+        <span id="monthTotal">$581.98</span>
       </div>
       <div class="progress">
         <div class="progress-bar"></div>
       </div>
     </div>
+
   </div>
 </div>
 
