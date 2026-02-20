@@ -1,72 +1,74 @@
-// Sample Expense Data
+/* ===============================
+   FULL REPORT PAGE JAVASCRIPT
+   =============================== */
+
+/* Demo Data */
 const expenses = [
-  { amount: 50, category: "Food", date: "2026-02-15" },
-  { amount: 30, category: "Transport", date: "2026-02-16" },
-  { amount: 70, category: "Food", date: "2026-02-17" },
-  { amount: 20, category: "Shopping", date: "2026-02-18" },
-  { amount: 100, category: "Bills", date: "2026-02-19" },
+  { date: 'Feb 10', amount: 200, category: 'Food' },
+  { date: 'Feb 11', amount: 30, category: 'Shopping' },
+  { date: 'Feb 12', amount: 55, category: 'Utilities' },
+  { date: 'Feb 13', amount: 0, category: 'Food' },
+  { date: 'Feb 14', amount: 15, category: 'Transport' },
+  { date: 'Feb 15', amount: 120, category: 'Food' },
+  { date: 'Feb 16', amount: 160, category: 'Utilities' }
 ];
 
-// Calculations
-const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
-const avgTransaction = expenses.length ? totalExpenses / expenses.length : 0;
-const uniqueCategories = new Set(expenses.map(e => e.category)).size;
+/* Calculations */
+const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+const avg = total / expenses.length;
 
-// Update UI
-document.getElementById("totalExpenses").textContent = "$" + totalExpenses.toFixed(2);
-document.getElementById("avgTransaction").textContent = "$" + avgTransaction.toFixed(2);
-document.getElementById("totalCategories").textContent = uniqueCategories;
-
-// Last 7 Days Data
-const last7Days = [];
-const labels = [];
-const today = new Date();
-
-for (let i = 6; i >= 0; i--) {
-  const d = new Date();
-  d.setDate(today.getDate() - i);
-  const dateStr = d.toISOString().split("T")[0];
-  labels.push(d.toLocaleDateString("en-US", { month: "short", day: "numeric" }));
-
-  const total = expenses
-    .filter(e => e.date === dateStr)
-    .reduce((sum, e) => sum + e.amount, 0);
-
-  last7Days.push(total);
-}
-
-// Bar Chart
-new Chart(document.getElementById("barChart"), {
-  type: "bar",
-  data: {
-    labels: labels,
-    datasets: [{
-      label: "Amount",
-      data: last7Days,
-      backgroundColor: "#3B82F6"
-    }]
-  }
-});
-
-// Category Data
-const categoryTotals = {};
+const categories = {};
 expenses.forEach(e => {
-  categoryTotals[e.category] = (categoryTotals[e.category] || 0) + e.amount;
+  categories[e.category] = (categories[e.category] || 0) + e.amount;
 });
 
-// Pie Chart
-new Chart(document.getElementById("pieChart"), {
-  type: "pie",
+/* Update Stats */
+document.getElementById('totalExpenses').textContent = `$${total.toFixed(2)}`;
+document.getElementById('avgTransaction').textContent = `$${avg.toFixed(2)}`;
+document.getElementById('totalCategories').textContent =
+  Object.keys(categories).length;
+
+document.getElementById('monthName').textContent = 'Feb 2026';
+document.getElementById('monthTotal').textContent = `$${total.toFixed(2)}`;
+
+/* Bar Chart */
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
   data: {
-    labels: Object.keys(categoryTotals),
+    labels: expenses.map(e => e.date),
     datasets: [{
-      data: Object.values(categoryTotals),
-      backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"]
+      data: expenses.map(e => e.amount),
+      backgroundColor: '#4f7cff',
+      borderRadius: 6
     }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true }
+    }
   }
 });
 
-// Monthly Breakdown
-const monthName = today.toLocaleString("default", { month: "short", year: "numeric" });
-document.getElementById("monthName").textContent = monthName;
-document.getElementById("monthTotal").textContent = "$" + totalExpenses.toFixed(2);
+/* Donut Chart */
+new Chart(document.getElementById('donutChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(categories),
+    datasets: [{
+      data: Object.values(categories),
+      backgroundColor: [
+        '#7ED3D1',
+        '#FF8AA1',
+        '#FFD36E',
+        '#6CA8FF',
+        '#B39DDB'
+      ],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    cutout: '65%',
+    plugins: { legend: { display: false } }
+  }
+});
